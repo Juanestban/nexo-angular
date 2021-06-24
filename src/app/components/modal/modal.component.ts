@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { form } from 'src/app/models/formulario';
 import { Usuarios } from 'src/app/models/usuarios';
+import { MercanciaService } from 'src/app/services/mercancia-table.service';
+import { MercanciasService } from 'src/app/services/mercancias.service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 
 @Component({
@@ -23,7 +25,8 @@ export class ModalComponent implements OnInit {
 
   constructor(
     private modalService: NgbModal,
-    private usuariosServicios: UsuariosService
+    private usuariosServicios: UsuariosService,
+    private mercanciaTablaServicio: MercanciaService
   ) {}
 
   onOpen(content: any) {
@@ -42,6 +45,7 @@ export class ModalComponent implements OnInit {
       .replace(/\-/g, '/');
     this.usuariosServicios.crearMercancia(this.formulario).subscribe((res) => {
       console.log(res);
+      this.mercanciaTablaServicio.obtenerTodoOtraVez();
       close();
     });
   }

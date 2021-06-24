@@ -3,7 +3,10 @@ import { Observable } from 'rxjs';
 export interface Mercancia {
   id: number;
   nombre: string;
-  idUsuario: number;
+  usuario: {
+    id: number;
+    nombre: string;
+  };
   cantidad: number;
   fechaRegistro: Date;
 }

@@ -101,4 +101,11 @@ export class MercanciaService {
 
     return of({ mercancias, total });
   }
+
+  public obtenerTodoOtraVez() {
+    this.mercanciaService.obtenerTodo().subscribe((res) => {
+      this.mercanciaPeticion = res.contenido;
+      this._mercancias$.next(res.contenido);
+    });
+  }
 }

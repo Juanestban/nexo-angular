@@ -1,16 +1,26 @@
 <div class="container-form">
   <form>
-    <div class="form-group form-inline">
-      buscador: <input class="form-control ml-2" type="text" name="searchTerm" [(ngModel)]="service.searchTerm" />
+    <div class="d-flex justify-content-between">
+      <div class="form-group form-inline">
+        buscador: <input class="form-control ml-2" type="text" name="searchTerm" [(ngModel)]="service.searchTerm" />
+      </div>
+      <div class="form-group form-inline">
+        usuario a realizar accion:
+        <select class="form-control ml-2" name="usuario" id="usuario" [(ngModel)]="editarMercancia.usuario.id">
+          <option disabled>seleccionar</option>
+          <option *ngFor="let usuario of usuarios" value={{usuario.id}}>{{usuario.nombre}}</option>
+        </select>
+      </div>
     </div>
 
     <table class="table table-striped">
       <thead>
         <tr>
           <th scope="col" sortable="name">nombre</th>
-          <th scope="col" sortable="area">cantidad</th>
-          <th scope="col" sortable="population">Fecha de registro</th>
-          <th scope="col" sortable="population">usuario</th>
+          <th scope="col">cantidad</th>
+          <th scope="col">Fecha de registro</th>
+          <th scope="col">usuario</th>
+          <th scope="col">acciones</th>
         </tr>
       </thead>
       <tbody>
@@ -25,7 +35,11 @@
             {{mercancia.fechaRegistro}}
           </td>
           <td>
-            {{mercancia.idUsuario}}
+            {{mercancia.usuario.nombre}}
+          </td>
+          <td>
+            <button class="btn btn-info mr-2" (click)="onOpen(content, mercancia)">editar</button>
+            <button class="btn btn-danger" (click)="eminarMercancia(mercancia.id)">eliminar</button>
           </td>
         </tr>
       </tbody>
@@ -43,3 +57,54 @@
     </div>
   </form>
 </div>
+
+
+
+
+<!-- modal editar formulario -->
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Formulario editar Mercancia</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label for="nombre">nombre</label>
+        <div class="input-group">
+          <input id="nombre" required class="form-control" [(ngModel)]="editarMercancia.nombre"
+            placeholder="digitar el nombre" name="nombre">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="cantidad">cantidad</label>
+        <div class="input-group">
+          <input id="cantidad" type="number" required class="form-control" [(ngModel)]="editarMercancia.cantidad"
+            placeholder="digitar la cantidad" name="cantidad">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="fechaIngreso">fecha ingreso</label>
+        <div class="input-group">
+          <input id="fechaIngreso" required type="date" class="form-control" [(ngModel)]="editarMercancia.fechaRegistro"
+            placeholder="digitar la fecha de ingreso" name="fechaIngreso">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="usuario">usuario</label>
+        <div class="input-group">
+          <select class="form-control" name="usuario" id="usuario" [(ngModel)]="editarMercancia.usuario.id">
+            <option disabled>seleccionar</option>
+            <option *ngFor="let usuario of usuarios" value={{usuario.id}}>{{usuario.nombre}}</option>
+          </select>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="editMercancia(modal.close)">modificar</button>
+  </div>
+</ng-template>
