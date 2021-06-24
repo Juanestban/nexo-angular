@@ -1,12 +1,8 @@
-import { Injectable, PipeTransform } from '@angular/core';
-
+import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
-
 import { Mercancia } from '../models/mercancia';
-import { MERCANCIAS } from '../models/testMercancia';
-import { DecimalPipe } from '@angular/common';
-import { debounceTime, delay, switchMap, tap } from 'rxjs/operators';
-import { SortColumn, SortDirection } from '../directive/sortable.directive';
+import { debounceTime, delay, switchMap } from 'rxjs/operators';
+import { MercanciasService } from './mercancias.service';
 
 interface SearchResult {
   mercancias: Mercancia[];
@@ -19,23 +15,16 @@ interface State {
   searchTerm: string;
 }
 
-const compare = (v1: string | number, v2: string | number) =>
-  v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
-
-function matches(country: Mercancia, term: string, pipe: PipeTransform) {
-  return (
-    country.name.toLowerCase().includes(term.toLowerCase()) ||
-    pipe.transform(country.area).includes(term) ||
-    pipe.transform(country.population).includes(term)
-  );
+function matches(mercancia: Mercancia, term: string) {
+  return mercancia.nombre.toLowerCase().includes(term.toLowerCase());
 }
 
 @Injectable({ providedIn: 'root' })
 export class MercanciaService {
-  private _loading$ = new BehaviorSubject<boolean>(true);
   private _search$ = new Subject<void>();
   private _mercancias$ = new BehaviorSubject<Mercancia[]>([]);
   private _total$ = new BehaviorSubject<number>(0);
+  private mercanciaPeticion: Mercancia[] = [];
 
   private _state: State = {
     page: 1,
@@ -43,21 +32,22 @@ export class MercanciaService {
     searchTerm: '',
   };
 
-  constructor(private pipe: DecimalPipe) {
-    this._search$
-      .pipe(
-        tap(() => this._loading$.next(true)),
-        debounceTime(200),
-        switchMap(() => this._search()),
-        delay(200),
-        tap(() => this._loading$.next(false))
-      )
-      .subscribe((result) => {
-        this._mercancias$.next(result.mercancias);
-        this._total$.next(result.total);
-      });
-
+  constructor(private mercanciaService: MercanciasService) {
     this._search$.next();
+    this.mercanciaService.obtenerTodo().subscribe((res) => {
+      this.mercanciaPeticion = res.contenido;
+      this._mercancias$.next(res.contenido);
+      this._search$
+        .pipe(
+          debounceTime(200),
+          switchMap(() => this._search())
+          // delay(200)
+        )
+        .subscribe((result) => {
+          this._mercancias$.next(result.mercancias);
+          this._total$.next(result.total);
+        });
+    });
   }
 
   get mercancias$() {
@@ -65,9 +55,6 @@ export class MercanciaService {
   }
   get total$() {
     return this._total$.asObservable();
-  }
-  get loading$() {
-    return this._loading$.asObservable();
   }
   get page() {
     return this._state.page;
@@ -97,12 +84,13 @@ export class MercanciaService {
     const { pageSize, page, searchTerm } = this._state;
 
     // 1. sort
-    let mercancias = MERCANCIAS;
+    let mercancias: Mercancia[] = this.mercanciaPeticion;
 
     // 2. filter
     mercancias = mercancias.filter((mercancia) =>
-      matches(mercancia, searchTerm, this.pipe)
+      matches(mercancia, searchTerm)
     );
+    console.log(mercancias);
     const total = mercancias.length;
 
     // 3. paginate
@@ -110,6 +98,7 @@ export class MercanciaService {
       (page - 1) * pageSize,
       (page - 1) * pageSize + pageSize
     );
+
     return of({ mercancias, total });
   }
 }

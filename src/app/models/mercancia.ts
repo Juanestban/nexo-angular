@@ -1,7 +1,18 @@
+import { Observable } from 'rxjs';
+
 export interface Mercancia {
   id: number;
-  name: string;
-  flag: string;
-  area: number;
-  population: number;
+  nombre: string;
+  idUsuario: number;
+  cantidad: number;
+  fechaRegistro: Date;
+}
+
+export interface paginado {
+  cantidadElementosPagina: number;
+  primerPagina: boolean;
+  totalElementos: number;
+  totalPaginas: number;
+  ultimaPagina: boolean;
+  contenido: Mercancia[];
 }
