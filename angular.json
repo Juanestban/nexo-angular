@@ -52,7 +52,15 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "hmr": {
+                "fileReplacements": [
+                  {
+                    "replace": "",
+                    "with": ""
+                  }
+                ]
+              }
             },
             "development": {
               "buildOptimizer": false,
@@ -73,6 +81,10 @@
             },
             "development": {
               "browserTarget": "nexos-angular:build:development"
+            },
+            "hmr": {
+              "hmr": true,
+              "browserTarget": "nexos-angular:build:hmr"
             }
           },
           "defaultConfiguration": "development"

@@ -1,6 +1,6 @@
 <ng-template #content let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+    <h4 class="modal-title" id="modal-basic-title">Formulario Mercancia</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -8,20 +8,41 @@
   <div class="modal-body">
     <form>
       <div class="form-group">
-        <label for="dateOfBirth">ent/sal mercancia</label>
+        <label for="nombre">nombre</label>
         <div class="input-group">
-          <input id="dateOfBirth" class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker
-            #dp="ngbDatepicker">
-          <div class="input-group-append">
-            <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button>
-          </div>
+          <input id="nombre" required class="form-control" [(ngModel)]="formulario.nombre"
+            placeholder="digitar el nombre" name="nombre">
         </div>
       </div>
+      <div class="form-group">
+        <label for="cantidad">cantidad</label>
+        <div class="input-group">
+          <input id="cantidad" type="number" required class="form-control" [(ngModel)]="formulario.cantidad"
+            placeholder="digitar la cantidad" name="cantidad">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="fechaIngreso">fecha ingreso</label>
+        <div class="input-group">
+          <input id="fechaIngreso" required type="date" [max]="maxDate" class="form-control"
+            [(ngModel)]="formulario.fechaRegistro" placeholder="digitar la fecha de ingreso" name="fechaIngreso">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="usuario">usuario</label>
+        <div class="input-group">
+          <select class="form-control" name="usuario" id="usuario" [(ngModel)]="formulario.usuario.id">
+            <option disabled>seleccionar</option>
+            <option *ngFor="let usuario of usuarios" value={{usuario.id}}>{{usuario.nombre}}</option>
+          </select>
+        </div>
+      </div>
+      {{formulario.nombre}}
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+    <button type="button" class="btn btn-outline-dark" (click)="onClose(modal.close)">guardar</button>
   </div>
 </ng-template>
 
-<button class="btn btn-md btn-outline-primary" (click)="open(content)">ent/sal mercancia</button>
+<button class="btn btn-md btn-outline-primary" (click)="onOpen(content)">registrar mercancia</button>
