@@ -3,13 +3,14 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { form } from 'src/app/models/formulario';
 import { Usuarios } from 'src/app/models/usuarios';
 import { MercanciaService } from 'src/app/services/mercancia-table.service';
-import { MercanciasService } from 'src/app/services/mercancias.service';
+// import { MercanciasService } from 'src/app/services/mercancias.service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 
 @Component({
   selector: 'app-modal',
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.css'],
+  // mirar los providers/servicios
 })
 export class ModalComponent implements OnInit {
   formulario: form = {

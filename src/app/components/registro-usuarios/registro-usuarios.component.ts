@@ -3,12 +3,13 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Cargos } from 'src/app/models/Cargos';
 import { FormUsuario } from 'src/app/models/formUsuario';
 import { Usuarios } from 'src/app/models/usuarios';
-import { CargosService } from 'src/app/services/cargos.service';
+// import { CargosService } from 'src/app/services/cargos.service';
 
 @Component({
   selector: 'app-registro-usuarios',
   templateUrl: './registro-usuarios.component.html',
   styleUrls: ['./registro-usuarios.component.css'],
+  // mirar los providers/servicios
 })
 export class RegistroUsuariosComponent implements OnInit {
   registroUsuario: FormUsuario = {
@@ -25,8 +26,7 @@ export class RegistroUsuariosComponent implements OnInit {
   todosCargos: Cargos[] = [];
 
   constructor(
-    private modalService: NgbModal,
-    private cargosServicios: CargosService
+    private modalService: NgbModal // private cargosServicios: CargosService
   ) {}
 
   ngOnInit(): void {

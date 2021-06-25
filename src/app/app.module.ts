@@ -10,7 +10,7 @@ import { ModalComponent } from './components/modal/modal.component';
 import { RegistroUsuariosComponent } from './components/registro-usuarios/registro-usuarios.component';
 import { HomeComponent } from './pages/home/home.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { FromGroupComponent } from './components/from-group/from-group.component';
+import { RegistroEntradaSalidaComponent } from './components/registro-entrada-salida/registro-entrada-salida.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +19,7 @@ import { FromGroupComponent } from './components/from-group/from-group.component
     ModalComponent,
     RegistroUsuariosComponent,
     HomeComponent,
-    FromGroupComponent,
+    RegistroEntradaSalidaComponent,
   ],
   imports: [
     BrowserModule,

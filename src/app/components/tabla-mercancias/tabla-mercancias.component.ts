@@ -15,6 +15,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   selector: 'app-tabla-mercancias',
   templateUrl: './tabla-mercancias.component.html',
   styleUrls: ['./tabla-mercancias.component.css'],
+  // mirar los providers/servicios
   providers: [MercanciaService, DecimalPipe],
 })
 export class TablaMercanciasComponent implements OnInit {

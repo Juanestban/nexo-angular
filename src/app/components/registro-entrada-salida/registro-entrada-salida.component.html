@@ -1,0 +1,50 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Formulario para entradas y salidas</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <button class="btn btn-{{esEntradaOSalida ? 'secondary' : 'info'}}" (click)="cambiarEstado()">
+      {{esEntradaOSalida ? 'Entrada' : 'Salida'}}
+    </button>
+    <!-- <form>
+      <div class="form-group">
+        <label for="nombre">nombre</label>
+        <div class="input-group">
+          <input id="nombre" required class="form-control" [(ngModel)]="form.nombre"
+            placeholder="digitar el nombre" name="nombre">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="cantidad">cantidad</label>
+        <div class="input-group">
+          <input id="cantidad" type="number" required class="form-control" [(ngModel)]="form.cantidad"
+            placeholder="digitar la cantidad" name="cantidad">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="fechaIngreso">fecha ingreso</label>
+        <div class="input-group">
+          <input id="fechaIngreso" required type="date" [max]="maxDate" class="form-control"
+            [(ngModel)]="form.fechaRegistro" placeholder="digitar la fecha de ingreso" name="fechaIngreso">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="usuario">usuario</label>
+        <div class="input-group">
+          <select class="form-control" name="usuario" id="usuario" [(ngModel)]="form.usuario.id">
+            <option disabled>seleccionar</option>
+            <option *ngFor="let usuario of usuarios" value={{usuario.id}}>{{usuario.nombre}}</option>
+          </select>
+        </div>
+      </div>
+    </form> -->
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="onClose(modal.close)">guardar</button>
+  </div>
+</ng-template>
+
+<button class="btn btn-md btn-outline-primary mr-2" (click)="onOpen(content)">entrada y salida - registro</button>
