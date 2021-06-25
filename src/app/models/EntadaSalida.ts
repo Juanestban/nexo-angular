@@ -3,9 +3,9 @@ export interface EntradaSalida {
   fechaIngreso: Date | string;
   mercancia: {
     id: number | string;
-    nombre: string;
-    cantidad: number | string;
-    fechaRegistro: Date;
+    nombre?: string;
+    cantidad?: number | string;
+    fechaRegistro?: Date;
   };
 }
 

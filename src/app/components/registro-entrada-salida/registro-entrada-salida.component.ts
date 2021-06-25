@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EntradaSalida } from 'src/app/models/EntadaSalida';
+import { Mercancia } from 'src/app/models/mercancia';
+import { MercanciasService } from 'src/app/services/mercancias.service';
+import { RegistEntSalService } from 'src/app/services/regist-ent-sal.service';
 
 @Component({
   selector: 'app-registro-entrada-salida',
@@ -21,20 +24,42 @@ export class RegistroEntradaSalidaComponent implements OnInit {
   entradasSalidas: EntradaSalida[] = [];
   // true === entrada || false === salida
   esEntradaOSalida: boolean = true;
+  mercancias: Mercancia[] = [];
 
-  constructor(private modalService: NgbModal) {}
+  constructor(
+    private modalService: NgbModal,
+    private mercanciasServicios: MercanciasService,
+    private entSalidaServiocios: RegistEntSalService
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.mercanciasServicios.obtenerTodo().subscribe((res) => {
+      this.mercancias = res.contenido;
+    });
+  }
 
   onOpen(content: any) {
     this.modalService.open(content, { size: 'lg' });
   }
 
-  onClose(close: any) {
-    close();
-  }
-
   cambiarEstado() {
     this.esEntradaOSalida = !this.esEntradaOSalida;
+  }
+
+  onSubmit(close: any): any {
+    const cond = this.esEntradaOSalida;
+    this.formEntSal.fechaIngreso = this.formEntSal.fechaIngreso
+      .toString()
+      .replace(/\-/g, '/');
+    delete this.formEntSal.mercancia.nombre;
+    delete this.formEntSal.mercancia.fechaRegistro;
+    delete this.formEntSal.mercancia.cantidad;
+
+    this.entSalidaServiocios[cond ? 'crearEntrada' : 'crearSalida'](
+      this.formEntSal
+    ).subscribe((res) => {
+      console.log('finalizado entrada servicio', res);
+      close();
+    });
   }
 }

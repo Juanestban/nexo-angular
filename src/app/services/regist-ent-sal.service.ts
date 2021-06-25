@@ -13,19 +13,19 @@ export class RegistEntSalService {
 
   // entradas
   obtenerTodoEntradas(): Observable<PaginadoEntradaSalida> {
-    return this.http.get<PaginadoEntradaSalida>(`${this.URL}/entradas`);
+    return this.http.get<PaginadoEntradaSalida>(`${this.URL}/ingreso`);
   }
 
   crearEntrada(entrada: EntradaSalida): Observable<EntradaSalida> {
-    return this.http.post<EntradaSalida>(`${this.URL}/entradas`, entrada);
+    return this.http.post<EntradaSalida>(`${this.URL}/ingreso`, entrada);
   }
 
   // salidas
   obtenerTodoSalidas(): Observable<PaginadoEntradaSalida> {
-    return this.http.get<PaginadoEntradaSalida>(`${this.URL}/salidas`);
+    return this.http.get<PaginadoEntradaSalida>(`${this.URL}/salida`);
   }
 
   crearSalida(salida: EntradaSalida): Observable<EntradaSalida> {
-    return this.http.post<EntradaSalida>(`${this.URL}/salidas`, salida);
+    return this.http.post<EntradaSalida>(`${this.URL}/salida`, salida);
   }
 }
