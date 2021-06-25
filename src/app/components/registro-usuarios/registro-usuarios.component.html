@@ -8,19 +8,43 @@
   <div class="modal-body">
     <form>
       <div class="form-group">
-        <label for="dateOfBirth">registro usuario</label>
+        <label for="nombre">nombre</label>
         <div class="input-group">
-          <input id="dateOfBirth" class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker
-            #dp="ngbDatepicker">
-          <div class="input-group-append">
-            <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button>
-          </div>
+          <input id="nombre" type="text" class="form-control" placeholder="nombre del usuario" name="nombre"
+            [(ngModel)]="registroUsuario.nombre">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="edad">edad</label>
+        <div class="input-group">
+          <input id="edad" type="number" class="form-control" placeholder="edad del usuario" name="edad"
+            [(ngModel)]="registroUsuario.edad">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="cargo">cargo</label>
+        <div class="input-group inline-input">
+          <select id="cargo" type="text" class="form-control mr-2 rounded" name="cargo"
+            [(ngModel)]="registroUsuario.cargo">
+            <!-- *ngFor para los posibles roles? o crear roles -->
+            <option disabled>seleccionar</option>
+            <option *ngFor="let cargo of todosCargos" value={{cargo.id}} disabled>{{cargo.nombre}}</option>
+          </select>
+          <input id="cargoCrear" class="form-control ml-2 rounded" placeholder="crear nuevo cargo" name="cargoCrear">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="fechaIngreso">Fecha ingreso compañia</label>
+        <div class="input-group">
+          <input id="fechaIngreso" type="date" class="form-control"
+            placeholder="fecha de ingreso del usuario a la compañia" name="fechaIngreso"
+            [(ngModel)]="registroUsuario.fechaIngreso">
         </div>
       </div>
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+    <button type="button" class="btn btn-outline-dark" (click)="onSubmit(modal.close)">guardar registro</button>
   </div>
 </ng-template>
 
