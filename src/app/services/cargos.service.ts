@@ -7,7 +7,7 @@ import { Cargos, PaginadoCargos } from '../models/Cargos';
   providedIn: 'root',
 })
 export class CargosService {
-  URL = '/api/v1/cargos';
+  URL = '/api/v1/cargo';
 
   constructor(private http: HttpClient) {}
 

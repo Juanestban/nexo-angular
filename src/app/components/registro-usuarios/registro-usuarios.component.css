@@ -1,0 +1,16 @@
+.input-cargo {
+  width: 50%;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.input-cargo input {
+  width: 98%;
+  padding-right: 0 !important;
+}
+
+.input-cargo button {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
